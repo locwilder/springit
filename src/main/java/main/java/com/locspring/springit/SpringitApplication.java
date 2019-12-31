@@ -1,6 +1,10 @@
 package main.java.com.locspring.springit;
 
 import com.config.SpringitProperties;
+import main.java.com.locspring.springit.domain.Comment;
+import main.java.com.locspring.springit.domain.Link;
+import main.java.com.locspring.springit.repository.CommentRespository;
+import main.java.com.locspring.springit.repository.LinkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,9 +24,22 @@ public class SpringitApplication {
     }
 
     @Bean
-    CommandLineRunner runner(){
+    CommandLineRunner runner(LinkRepository linkRepository, CommentRespository commentRespository){
         return args -> {
             System.out.println("this is our message " + springitProperties.getWelcomeMsg());
+            Link link = new Link("Getting startet", "url bla bla");
+            linkRepository.save(link);
+
+            Comment comment = new Comment("its awesome", link);
+            commentRespository.save(comment);
+
+            link.addComment(comment);
+
+            System.out.println("we added a link with comment");
+
+            Link firstlink = linkRepository.findByTitle("Getting startet");
+            System.out.println(firstlink.getTitle());
+
         };
     }
 
