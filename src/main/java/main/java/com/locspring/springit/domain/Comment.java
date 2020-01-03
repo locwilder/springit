@@ -1,29 +1,42 @@
 package main.java.com.locspring.springit.domain;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import main.java.com.locspring.springit.service.BeanUtil;
+import org.ocpsoft.prettytime.PrettyTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Entity
-@Data
+@RequiredArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
-public class Comment extends Auditable{
-    
+public class Comment extends Auditable {
+
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
+
+    @NonNull
     private String body;
 
     @ManyToOne
+    @NonNull
     private Link link;
 
-    public Comment(String body, Link link) {
-        this.body=body;
-        this.link=link;
+    public String getPrettyTime() {
+        PrettyTime pt = BeanUtil.getBean(PrettyTime.class);
+        return pt.format(convertToDateViaInstant(getCreationDate()));
     }
+
+    private Date convertToDateViaInstant(LocalDateTime dateToConvert) {
+        return java.util.Date.from(dateToConvert.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
 }
