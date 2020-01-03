@@ -57,6 +57,4 @@ public abstract class Auditable {
     public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
-
-    public abstract Object getId();
 }
