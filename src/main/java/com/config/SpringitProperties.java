@@ -2,7 +2,7 @@ package com.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties("springit")
+//@ConfigurationProperties("springit")
 
 public class SpringitProperties {
     private String welcomeMsg = "Hello World";
