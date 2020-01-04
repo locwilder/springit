@@ -1,6 +1,7 @@
 package main.java.com.locspring.springit.domain;
 
 import lombok.*;
+import main.java.com.locspring.springit.domain.validator.PasswordsMatch;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @Setter
 @ToString
 @NoArgsConstructor
+@PasswordsMatch
 public class User implements UserDetails {
 
     @Id @GeneratedValue
@@ -42,32 +44,32 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
-//    @NonNull
-//    @NotEmpty(message = "You must enter First Name.")
-//    private String firstName;
-//
-//    @NonNull
-//    @NotEmpty(message = "You must enter Last Name.")
-//    private String lastName;
+    @NonNull
+    @NotEmpty(message = "You must enter First Name.")
+    private String firstName;
 
-//    @Transient
-//    @Setter(AccessLevel.NONE)
-//    private String fullName;
+    @NonNull
+    @NotEmpty(message = "You must enter Last Name.")
+    private String lastName;
 
-//    @NonNull
-//    @NotEmpty(message = "Please enter alias.")
-//    @Column(nullable = false, unique = true)
-//    private String alias;
+    @Transient
+    @Setter(AccessLevel.NONE)
+    private String fullName;
 
-//    @Transient
-//    @NotEmpty(message = "Please enter Password Confirmation")
-//    private String confirmPassword;
-//
-//    private String activationCode;
-//
-//    public String getFullName(){
-//        return firstName + " " + lastName;
-//    }
+    @NonNull
+    @NotEmpty(message = "Please enter alias.")
+    @Column(nullable = false, unique = true)
+    private String alias;
+
+    @Transient
+    @NotEmpty(message = "Please enter Password Confirmation")
+    private String confirmPassword;
+
+    private String activationCode;
+
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
 
     public void addRole(Role role) {
         roles.add(role);
